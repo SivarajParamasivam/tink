@@ -25,7 +25,7 @@ SOFTWARE.
  * are drawn in succession
  * <p>
  * Use a DashedLine instance just as you would use a movie clip to draw lines
- * and fills using Flash's drawing API on a movie clip.
+ * and fills using Flash's drawing API on a movie clip.</p>
  *
  * @usage
  * <pre><code>import com.senocular.drawing.DashedLine;
