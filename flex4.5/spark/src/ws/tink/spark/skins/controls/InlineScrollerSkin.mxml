@@ -2,106 +2,94 @@
 
 <!--
 
-Copyright (c) 2010 Tink Ltd - http://www.tink.ws
+ADOBE SYSTEMS INCORPORATED
+Copyright 2008 Adobe Systems Incorporated
+All Rights Reserved.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
-documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
-the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and
-to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions
-of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO 
-THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, 
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+NOTICE: Adobe permits you to use, modify, and distribute this file
+in accordance with the terms of the license agreement accompanying it.
 
 -->
 
 <!--
 
-InlineScroller unconditionally sets its skin's layout to private layout
-implementation that handles the scroll policies.  Stepper skins can
-only provide replacement steps.  The skin's layout and
+Scroller unconditionally sets its skin's layout to private layout
+implementation that handles the scroll policies.  Scroller skins can
+only provide replacement scrollbars.  The skin's layout and
 constraints or dimensions set on skin parts will not be honored.  To
-gain more control over the layout of a viewport and its steps,
-instead of using Stepper, add them to a Group and use the Step component's
+gain more control over the layout of a viewport and its scrollbars,
+instead of using Scroller, add them to a Group and use the ScrollBar component's
 viewport property to link them together.
- 
+
 -->
 
-<!--- The default skin class for the Spark InlineScroller component. 
+<!--- The default skin class for the Spark Scroller component. 
 
-      @see ws.tink.spark.controls.InlineScroller
-      @see ws.tink.spark.layouts.InlineScrollerLayout
+@see spark.components.Scroller
 
-      @langversion 3.0
-      @playerversion Flash 10
-      @playerversion AIR 1.5
-      @productversion Flex 4
+@langversion 3.0
+@playerversion Flash 10
+@playerversion AIR 1.5
+@productversion Flex 4
 -->
-<s:SparkSkin xmlns:fx="http://ns.adobe.com/mxml/2009"
-			 xmlns:s="library://ns.adobe.com/flex/spark"
-			 xmlns:st="library://ns.tink.ws/flex/spark">
-
-    <fx:Metadata>
-    <![CDATA[ 
-        /** 
-         * @copy spark.skins.spark.ApplicationSkin#hostComponent
-         */
-       // [HostComponent("ws.tink.spark.controls.InlineScroller")]
-    ]]>
-    </fx:Metadata> 
-        
-    <fx:Script>
-    <![CDATA[    
-        /**
-         *  @private
-         */
-        override public function beginHighlightBitmapCapture() : Boolean
-        {
-            var needUpdate:Boolean = super.beginHighlightBitmapCapture();
-            
-            // Draw an opaque rect that fill our entire skin. Our background
-            // is transparent, but we don't want focus/error skins to
-            // poke through.  This is safe to do since we don't have any 
-            // graphic elements as direct children.
-            graphics.beginFill(0);
-            graphics.drawRect(0, 0, width, height);
-            graphics.endFill();
-
-            return needUpdate;
-        }
-        
-        /**
-         *  @private
-         */
-        override public function endHighlightBitmapCapture() : Boolean
-        {
-            var needUpdate:Boolean = super.endHighlightBitmapCapture();
-            
-            // Clear the rect we drew in beginBitmapCapture();
-            graphics.clear();
-
-            return needUpdate;
-        }
-    ]]>
-    </fx:Script>
-        
-    <!---  A vertical scrollbar that lets you control the portion of data that is displayed 
-            when there is too much data to fit vertically in a display area.
-            The InlineScroller determines whether the vertical ScrollBar is visible. -->
-	<st:VStep id="verticalScrollBar" visible="false" left="0" right="0"/>
-    <!--<st:VStep id="verticalScrollBar" visible="false" smoothScrolling="true" repeatInterval="500"
-									 repeatDelay="0" width="100%"/>-->
-    
-    <!---  A horizontal scrollbar that lets you control the portion of data that is displayed 
-            when there is too much data to fit horizontally in a display area.
-            The InlineScroller determines whether the horizontal ScrollBar is visible. -->
-	<st:HStep id="horizontalScrollBar" visible="false" height="100%" top="0" bottom="0"/>
-    <!--<st:HStep id="horizontalScrollBar" visible="false" smoothScrolling="true" repeatInterval="500"
-									 repeatDelay="0" height="100%"/>-->
-
+<s:SparkSkin xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark">
+	
+	<fx:Metadata>
+		<![CDATA[ 
+		/** 
+		* @copy spark.skins.spark.ApplicationSkin#hostComponent
+		*/
+		[HostComponent("spark.components.Scroller")]
+		]]>
+	</fx:Metadata> 
+	
+	<fx:Script>
+		<![CDATA[    
+			import ws.tink.spark.skins.controls.HScrollBarIncrementDecrementSkin;
+			import ws.tink.spark.skins.controls.VScrollBarIncrementDecrementSkin;
+			/**
+			 *  @private
+			 */
+			override public function beginHighlightBitmapCapture() : Boolean
+			{
+				var needUpdate:Boolean = super.beginHighlightBitmapCapture();
+				
+				// Draw an opaque rect that fill our entire skin. Our background
+				// is transparent, but we don't want focus/error skins to
+				// poke through.  This is safe to do since we don't have any 
+				// graphic elements as direct children.
+				graphics.beginFill(0);
+				graphics.drawRect(0, 0, width, height);
+				graphics.endFill();
+				
+				return needUpdate;
+			}
+			
+			/**
+			 *  @private
+			 */
+			override public function endHighlightBitmapCapture() : Boolean
+			{
+				var needUpdate:Boolean = super.endHighlightBitmapCapture();
+				
+				// Clear the rect we drew in beginBitmapCapture();
+				graphics.clear();
+				
+				return needUpdate;
+			}
+		]]>
+	</fx:Script>
+	
+	<!---  A vertical scrollbar that lets you control the portion of data that is displayed 
+	when there is too much data to fit vertically in a display area.
+	The Scroller determines whether the vertical ScrollBar is visible. -->
+	<s:VScrollBar id="verticalScrollBar" x="20" visible="false" width="100%" />
+	
+	<!---  A horizontal scrollbar that lets you control the portion of data that is displayed 
+	when there is too much data to fit horizontally in a display area.
+	The Scroller determines whether the horizontal ScrollBar is visible. -->
+	<s:HScrollBar id="horizontalScrollBar" visible="false" height="100%"/>
+	
+	
+	
 </s:SparkSkin>
